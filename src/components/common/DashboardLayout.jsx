@@ -3,6 +3,7 @@ import TopBar from './TopBar';
 import Sidebar from './Sidebar';
 import './DashboardLayout.css';
 import Footer from './Footer';
+import FacultyDashboard from '../faculty/FacultyDashboard'
 
 function DashboardLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -15,11 +16,11 @@ function DashboardLayout({ children }) {
       <Sidebar isOpen={sidebarOpen} closeSidebar={() => setSidebarOpen(false)} />
       {sidebarOpen && <div className="overlay" onClick={() => setSidebarOpen(false)}></div>}
       <main className="dashboard-content">
-        {
-          // Inject isSidebarOpen into children
-          React.cloneElement(children, { isSidebarOpen: sidebarOpen })
-        }
+        {React.isValidElement(children)
+    ? React.cloneElement(children, { isSidebarOpen: sidebarOpen })
+    : children}
       </main>
+      <FacultyDashboard></FacultyDashboard>
       <Footer></Footer>
     </div>
   );

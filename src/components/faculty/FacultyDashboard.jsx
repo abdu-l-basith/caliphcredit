@@ -1,152 +1,69 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './FacultyDashboard.css';
 import AcademicPerformanceModal from './AcademicPerformanceForm';
+import {db} from '../../firebase/config';
+import {collection, getDocs, query, orderBy } from "firebase/firestore";
+
 
 function FacultyDashboard({ isSidebarOpen }) {
   const [modalData, setModalData] = useState(null);
+  const [cards,setCards] = useState([]);
+  const Firebase = db;
+
+  useEffect(() => {
+    const fetchCards = async () => {
+      try {
+        const q = query(collection(Firebase, "menus"), orderBy("Title"));
+        const querySnapshot = await getDocs(q);
+        const docs = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setCards(docs);
+      } catch (error) {
+        console.error("Error fetching cards:", error);
+      }
+    };
+
+    fetchCards();
+  }, []);
+
   const handleOpenModal = (data) => {
     setModalData(data);
   };
-  
   const handleCloseModal = () => setModalData(null);
   return (
     
     <div className={`container ${isSidebarOpen ? 'sidebar-open' : ''}`}>
-      
-      <div className="item" onClick={() => handleOpenModal({ title: "Academic Performance", credit: 3 })}>
+      {cards.map((card)=>{
+        return(
+          <div key={card.id} className="item" onClick={() => handleOpenModal(card)}>
         <div className="card-container">
           <div className="icon-circle">
-            <i className="fa-solid fa-graduation-cap"></i>
+            <i className={card.Image}></i>
           </div>
-          <p className="card-title">Academic Perfromance</p>
+          <p className="card-title">{card.Title}</p>
         </div>
       </div>
-
-      <div className="item" >
-      <div className="card-container">
-      <div className="icon-circle">
-      <i className="fa-solid fa-user-graduate"></i>
-      </div>
-      <p className="card-title">OverAll Perfromance</p>
-    </div>
-      </div>
-
-      <div className="item" >
-      <div className="card-container">
-      <div className="icon-circle">
-      <i className="fa-solid fa-clipboard-user"></i>
-      </div>
-      <p className="card-title">Attendance</p>
-    </div>
-      </div>
-
-      <div className="item" >
-      <div className="card-container">
-      <div className="icon-circle">
-      <i className="fa-solid fa-trophy"></i>
-      </div>
-      <p className="card-title">Program Winner</p>
-    </div>
-      </div>
-
-      <div className="item" >
-      <div className="card-container">
-      <div className="icon-circle">
-      <i className="fa-solid fa-people-group"></i>
-      </div>
-      <p className="card-title">Program Winner - Group</p>
-    </div>
-      </div>
-
-      <div className="item" >
-      <div className="card-container">
-      <div className="icon-circle">
-      <i className="fa-solid fa-medal"></i>
-      </div>
-      <p className="card-title">Outside Program</p>
-    </div>
-      </div>
-
-      <div className="item" >
-      <div className="card-container">
-      <div className="icon-circle">
-      <i className="fa-solid fa-bars-progress"></i>
-      </div>
-      <p className="card-title">Summer Task</p>
-    </div>
-      </div>
-
-      <div className="item" >
-      <div className="card-container">
-      <div className="icon-circle">
-      <i className="fa-solid fa-puzzle-piece"></i>
-      </div>
-      <p className="card-title">Add-on Course</p>
-    </div>
-      </div>
-
-      <div className="item" >
-      <div className="card-container">
-      <div className="icon-circle">
-      <i className="fa-solid fa-handshake"></i>
-      </div>
-      <p className="card-title">Serving in Committees</p>
-    </div>
-      </div>
-
-      <div className="item" >
-      <div className="card-container">
-      <div className="icon-circle">
-      <i className="fa-solid fa-building-ngo"></i>
-      </div>
-      <p className="card-title">Serving in Unions</p>
-    </div>
-      </div>
-      
-      <div className="item" >
-      <div className="card-container">
-      <div className="icon-circle">
-      <i className="fa-solid fa-person"></i>
-      </div>
-      <p className="card-title">Serving as Leaders</p>
-    </div>
-      </div>
-
-      <div className="item" >
-      <div className="card-container">
-      <div className="icon-circle">
-      <i className="fa-solid fa-briefcase"></i>
-      </div>
-      <p className="card-title">Startup</p>
-    </div>
-      </div>
-
-      <div className="item" >
-      <div className="card-container">
-      <div className="icon-circle">
-      <i className="fa-solid fa-city"></i>
-      </div>
-      <p className="card-title">Inititation</p>
-    </div>
-      </div>
-
-      <div className="item" >
-      <div className="card-container">
-      <div className="icon-circle">
-      <i className="fa-solid fa-certificate"></i>
-      </div>
-      <p className="card-title">Certification</p>
-    </div>
-      </div>
+        )
+        
+      })}
 
       {/* Modal must be inside the return and below useState */}
       {modalData && (
   <AcademicPerformanceModal
-    isOpen={!!modalData}
-    onClose={() => setModalData(null)}
-    title={modalData.title}
-    credit={modalData.credit}
-  />
+  isOpen={!!modalData}
+  onClose={handleCloseModal}
+  title={modalData.Title}
+  description={modalData.Description}
+  credit={
+    modalData.Credit !== undefined
+      ? { type: 'credit', value: modalData.Credit }
+      : modalData.MaxCredit !== undefined
+      ? { type: 'max', value: modalData.MaxCredit }
+      : modalData.Credits !== undefined
+      ? { type: 'categories', value: modalData.Credits }
+      : { type: 'none', value: null }
+  }
+/>
+
 )}
 
     </div>
