@@ -13,6 +13,8 @@ import SuperAdminLogin from './components/superadmin/SuperAdminLogin'
 import SuperAdminHome from './components/superadmin/SuperAdminHome'
 import DirectorLogin from './components/director/DirectorLogin';
 import DirectorDashboardLayout from './components/director/DirectorDashboardLayout';
+import Profile from './components/faculty/Profile';
+import FacultyHistory from './components/faculty/FacultyHistory';
 
 
 function App() {
@@ -28,7 +30,8 @@ function App() {
         <Route path="/director" element={<DirectorDashboardLayout />} />
       </Routes>
     </BrowserRouter> */}
-    <DashboardLayout></DashboardLayout>
+    {/* <DashboardLayout></DashboardLayout> */}
+    <FacultyHistory></FacultyHistory>
    
     </div>
   

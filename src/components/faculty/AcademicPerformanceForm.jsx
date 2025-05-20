@@ -23,7 +23,8 @@ const handleApprove = async () => {
     credit: selectedCredit,
     title: title,
     remark: remark,
-    date: serverTimestamp(), // auto timestamp
+    date: serverTimestamp(),
+    approvedBy: 'Basith' // auto timestamp
   };
 
   try {
