@@ -15,15 +15,21 @@ const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true); // Add loading flag
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
-    if (storedUser) setUser(JSON.parse(storedUser));
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+      console.log("Restored user from localStorage", JSON.parse(storedUser));
+    }
+    setLoading(false); // ✅ Wait for loading to finish
   }, []);
 
   const login = (userData) => {
     setUser(userData);
     localStorage.setItem("user", JSON.stringify(userData));
+    console.log("Saved user", userData);
   };
 
   const logout = () => {
@@ -31,12 +37,16 @@ export function AuthProvider({ children }) {
     localStorage.removeItem("user");
   };
 
+  // ✅ Show loading screen until session is loaded
+  if (loading) return <div>Loading...</div>;
+
   return (
     <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
 }
+
 
 export function useAuth() {
   return useContext(AuthContext);
