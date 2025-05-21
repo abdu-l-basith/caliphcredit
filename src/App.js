@@ -1,41 +1,92 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import TopBar from './components/common/TopBar';
-import HeaderBar from './components/common/HeaderBar';
-import Footer from './components/common/Footer';
-import FacultyDashboard from './components/faculty/FacultyDashboard';
-import AcademicPerformanceForm from './components/faculty/AcademicPerformanceForm';
-import DashboardLayout from './components/common/DashboardLayout';
-import FacultyLogin from './components/faculty/FacultyLogin';
-import SuperAdminLogin from './components/superadmin/SuperAdminLogin'
-import SuperAdminHome from './components/superadmin/SuperAdminHome'
-import DirectorLogin from './components/director/DirectorLogin';
-import DirectorDashboardLayout from './components/director/DirectorDashboardLayout';
-import Profile from './components/faculty/Profile';
-import FacultyHistory from './components/faculty/FacultyHistory';
+import React, { createContext, useState, useEffect, useContext } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import FacultyDashboard from "./components/faculty/FacultyDashboard";
+import DashboardLayout from "./components/common/DashboardLayout";
+import FacultyLogin from "./components/faculty/FacultyLogin";
+import DirectorDashboardLayout from "./components/faculty/DirectorDashboardLayout";
 
 
-function App() {
+const AuthContext = createContext();
+
+export function AuthProvider({ children }) {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) setUser(JSON.parse(storedUser));
+  }, []);
+
+  const login = (userData) => {
+    setUser(userData);
+    localStorage.setItem("user", JSON.stringify(userData));
+  };
+
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem("user");
+  };
+
   return (
-    <div className='app-container'>
-    {/* <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<FacultyLogin />} />
-        <Route path="/dashboard" element={<DashboardLayout />} />
-        <Route path="/basith-login" element={<SuperAdminLogin />} />
-        <Route path="/basith-home" element={<SuperAdminLogin />} />
-        <Route path="/admin" element={<DirectorLogin />} />
-        <Route path="/director" element={<DirectorDashboardLayout />} />
-      </Routes>
-    </BrowserRouter> */}
-    {/* <DashboardLayout></DashboardLayout> */}
-    <FacultyHistory></FacultyHistory>
-   
-    </div>
-  
+    <AuthContext.Provider value={{ user, login, logout }}>
+      {children}
+    </AuthContext.Provider>
   );
 }
 
-export default App;
+export function useAuth() {
+  return useContext(AuthContext);
+}
+
+function ProtectedRoute({ allowedRoles, children }) {
+  const { user } = useAuth();
+
+  if (!user) return <Navigate to="/login" replace />;
+
+  if (!allowedRoles.includes(user.role)) {
+    if (user.role === "faculty") return <Navigate to="/" replace />;
+    if (user.role === "director") return <Navigate to="/admin" replace />;
+    return <Navigate to="/login" replace />;
+  }
+
+  return children;
+}
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute allowedRoles={["faculty"]}>
+                <DashboardLayout />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute allowedRoles={["director"]}>
+                <DirectorDashboardLayout />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <FacultyLogin />
+              
+            }
+          />
+          <Route path="*" element={<Navigate to="/login" replace />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
+  );
+}

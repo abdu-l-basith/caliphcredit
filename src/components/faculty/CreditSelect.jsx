@@ -16,7 +16,6 @@ function CreditSelect({credit, onCreditFix}) {
           {item.Title}
         </button>
       ))}
-      <button onClick={()=>console.log(creditFix)}>check credit</button>
     </div>
   )
 }

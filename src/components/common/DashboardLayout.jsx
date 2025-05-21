@@ -3,25 +3,44 @@ import TopBar from './TopBar';
 import Sidebar from './Sidebar';
 import './DashboardLayout.css';
 import Footer from './Footer';
-import FacultyDashboard from '../faculty/FacultyDashboard'
+import FacultyDashboard from '../faculty/FacultyDashboard';
+import Profile from '../faculty/Profile';
 
-function DashboardLayout({ children }) {
+
+function DashboardLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState('dashboard'); // This drives renderContent
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
+
+  const renderContent = () => {
+    switch (currentPage) {
+      case 'dashboard':
+        return <FacultyDashboard />;
+      case 'profile':
+        return <Profile />;
+      case 'history':
+        return <div><h1>history</h1></div>;
+      case 'settings':
+        return <div><h1>settings</h1></div>;
+      default:
+        return <FacultyDashboard />;
+    }
+  };
 
   return (
     <div className="dashboard-layout">
       <TopBar toggleSidebar={toggleSidebar} />
-      <Sidebar isOpen={sidebarOpen} closeSidebar={() => setSidebarOpen(false)} />
+      <Sidebar
+        isOpen={sidebarOpen}
+        closeSidebar={() => setSidebarOpen(false)}
+        setCurrentPage={setCurrentPage} // 👈 Pass this down
+      />
       {sidebarOpen && <div className="overlay" onClick={() => setSidebarOpen(false)}></div>}
       <main className="dashboard-content">
-        {React.isValidElement(children)
-    ? React.cloneElement(children, { isSidebarOpen: sidebarOpen })
-    : children}
+        {renderContent()}
       </main>
-      <FacultyDashboard></FacultyDashboard>
-      <Footer></Footer>
+      <Footer />
     </div>
   );
 }

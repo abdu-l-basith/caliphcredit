@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './AcademicPerformanceForm.css';
 import { db } from '../../firebase/config';
-import { collection, getDocs, addDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, getDocs, addDoc, serverTimestamp, updateDoc, arrayUnion, increment, doc } from 'firebase/firestore';
 import SliderWithLabels from './Slider';
 import CreditSelect from './CreditSelect';
 import SingleCredit from './SingleCredit';
@@ -24,19 +24,31 @@ const handleApprove = async () => {
     title: title,
     remark: remark,
     date: serverTimestamp(),
-    approvedBy: 'Basith' // auto timestamp
+    approvedBy: 'Basith'
   };
 
   try {
-    await addDoc(collection(db, 'credits'), newCredit);
-    alert('Credit approved and added to Firestore!');
-    onClose(); // optionally close modal
-    // Optionally reset fields here
+    // Step 1: Add credit to 'credits' collection
+    const creditRef = await addDoc(collection(db, 'credits'), newCredit);
+
+    // Step 2: Reference the student document
+    const studentRef = doc(db, 'students', selectedStudent);
+
+    // Step 3: Update student's doc: push credit ID + increment totalCredits
+    await updateDoc(studentRef, {
+      credits: arrayUnion(creditRef.id), // Add credit ID to array
+      totalCredits: increment(selectedCredit) // Add credit score to total
+    });
+
+    alert('Credit approved, added to Firestore, and student updated!');
+    onClose();
+
+    // Reset fields
     setSelectedStudent('');
     setSelectedCredit(null);
     setRemark('');
   } catch (error) {
-    console.error('Error adding credit:', error);
+    console.error('Error approving credit:', error);
     alert('Failed to approve credit. Please try again.');
   }
 };
@@ -64,7 +76,7 @@ const renderCreditType = (credit) => {
         const querySnapshot = await getDocs(collection(db, 'students'));
         const studentList = querySnapshot.docs.map(doc => ({
           id: doc.id,
-          name: doc.data().Name
+          name: doc.data().name
         }));
         setStudents(studentList);
       } catch (error) {
@@ -92,7 +104,7 @@ const renderCreditType = (credit) => {
         <select className="student-select" value={selectedStudent} onChange={handleStudentChange}>
   <option value="">Select Student</option>
   {students.map((student) => (
-    <option key={student.id} value={student.name}>
+    <option key={student.id} value={student.id}>
       {student.name}
     </option>
   ))}
