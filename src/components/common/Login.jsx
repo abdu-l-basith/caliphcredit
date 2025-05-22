@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../../firebase/config"; // Make sure your Firestore instance is exported from here
-import './FacultyLogin.css';
+import './Login.css';
 import { useNavigate } from 'react-router-dom';
 import {useAuth, userAuth} from "../../App"
 
-const FacultyLogin = () => {
+const Login = () => {
   const [userName,setUserName] = useState()
   const [password,setPassword] = useState()
   const navigate = useNavigate();
@@ -78,4 +78,4 @@ const FacultyLogin = () => {
   );
 };
 
-export default FacultyLogin;
+export default Login;

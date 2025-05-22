@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import './Slider.css'; // We'll add styles here
+import './CreditSlider.css'; // We'll add styles here
 
-const SliderWithLabels = ({credit, onCreditFix}) => {
+const CreditSlider = ({credit, onCreditFix}) => {
   const min = 1;
   const max = credit;
   const step = 1;
@@ -47,4 +47,4 @@ const [value,setValue] = useState(1);
   );
 };
 
-export default SliderWithLabels;
+export default CreditSlider;

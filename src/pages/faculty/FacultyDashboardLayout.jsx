@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import TopBar from './TopBar';
-import Sidebar from './Sidebar';
-import './DashboardLayout.css';
-import Footer from './Footer';
-import FacultyDashboard from '../faculty/FacultyDashboard';
-import Profile from '../faculty/Profile';
+import TopBar from '../../components/common/TopBar';
+import Sidebar from '../../components/faculty/FacultySidebar';
+import './FacultyDashboardLayout.css';
+import Footer from '../../components/common/Footer';
+import FacultyDashboard from '../../components/common/AddCreditMenus';
+import Profile from '../../components/faculty/FacultyProfile';
 
 
-function DashboardLayout() {
+function FacultyDashboardLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState('dashboard'); // This drives renderContent
 
@@ -45,4 +45,4 @@ function DashboardLayout() {
   );
 }
 
-export default DashboardLayout;
+export default FacultyDashboardLayout;

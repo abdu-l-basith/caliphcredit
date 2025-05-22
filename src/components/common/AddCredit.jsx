@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import './AcademicPerformanceForm.css';
+import './AddCredit.css';
 import { db } from '../../firebase/config';
 import { collection, getDocs, addDoc, serverTimestamp, updateDoc, arrayUnion, increment, doc } from 'firebase/firestore';
-import SliderWithLabels from './Slider';
-import CreditSelect from './CreditSelect';
+import SliderWithLabels from './CreditSlider';
+import CreditSelect from './MultiCreditSelecter';
 import SingleCredit from './SingleCredit';
 
 
 
-const AcademicPerformanceModal = ({ isOpen, onClose, title, credit, description }) => {
+const AddCredit = ({ isOpen, onClose, title, credit, description }) => {
   const [students, setStudents] = useState([]);
 const [selectedStudent, setSelectedStudent] = useState('');
 
@@ -151,4 +151,4 @@ const renderCreditType = (credit) => {
   );
 };
 
-export default AcademicPerformanceModal;
+export default AddCredit;

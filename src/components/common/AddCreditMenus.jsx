@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import './FacultyDashboard.css';
-import AcademicPerformanceModal from './AcademicPerformanceForm';
+import './AddCreditMenus.css';
+import AcademicPerformanceModal from './AddCredit';
 import {db} from '../../firebase/config';
 import {collection, getDocs, query, orderBy } from "firebase/firestore";
 
 
-function FacultyDashboard({ isSidebarOpen }) {
+function AddCreditMenus({ isSidebarOpen }) {
   const [modalData, setModalData] = useState(null);
   const [cards,setCards] = useState([]);
   const Firebase = db;
@@ -70,4 +70,4 @@ function FacultyDashboard({ isSidebarOpen }) {
   );
 }
 
-export default FacultyDashboard;
+export default AddCreditMenus;

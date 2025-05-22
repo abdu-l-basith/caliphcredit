@@ -1,9 +1,9 @@
 import React from 'react';
-import './Sidebar.css';
+import './FacultySidebar.css';
 import { useAuth } from '../../App';
 import { useNavigate } from 'react-router-dom';
 
-function Sidebar({ isOpen, closeSidebar, setCurrentPage }) {
+function FacultySidebar({ isOpen, closeSidebar, setCurrentPage }) {
   const { logout } = useAuth();
   const navigate = useNavigate();
 
@@ -25,4 +25,4 @@ function Sidebar({ isOpen, closeSidebar, setCurrentPage }) {
   );
 }
 
-export default Sidebar;
+export default FacultySidebar;

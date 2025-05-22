@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import './Profile.css';
+import './FacultyProfile.css';
 import { collection, getDocs,doc, getDoc, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../../firebase/config';
 
-const Profile = () => {
+const FacultyProfile = () => {
     const [name,setName] = useState();
     const [designation, setDesignation] = useState();
     const [email,setEmail] = useState();
@@ -85,4 +85,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default FacultyProfile;

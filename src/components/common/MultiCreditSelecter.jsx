@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
-import './CreditSelect.css'
+import './MultiCreditSelecter.css'
 
-function CreditSelect({credit, onCreditFix}) {
+function MultiCreditSelecter({credit, onCreditFix}) {
      const [selected, setSelected] = useState(null);
      const [creditFix,setCreidtFix] = useState();
   return (
@@ -20,4 +20,4 @@ function CreditSelect({credit, onCreditFix}) {
   )
 }
 
-export default CreditSelect
+export default MultiCreditSelecter

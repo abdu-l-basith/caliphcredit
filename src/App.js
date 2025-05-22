@@ -5,10 +5,10 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import FacultyDashboard from "./components/faculty/FacultyDashboard";
-import DashboardLayout from "./components/common/DashboardLayout";
-import FacultyLogin from "./components/faculty/FacultyLogin";
-import DirectorDashboardLayout from "./components/faculty/DirectorDashboardLayout";
+import FacultyDashboard from "./components/common/AddCreditMenus";
+import DashboardLayout from "./pages/faculty/FacultyDashboardLayout";
+import FacultyLogin from "./components/common/Login";
+import DirectorDashboardLayout from "./pages/director/DirectorDashboardLayout";
 
 
 const AuthContext = createContext();
