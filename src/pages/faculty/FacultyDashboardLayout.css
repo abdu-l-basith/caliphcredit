@@ -13,3 +13,17 @@
     padding: 20px;
   } */
   
+  .faculty-dashboard-layout{
+    display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  }
+ .faculty-dashboard-main-wrapper{
+  display: flex;
+  flex: 1;
+ }
+ .faculty-dashboard-content{
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+ }

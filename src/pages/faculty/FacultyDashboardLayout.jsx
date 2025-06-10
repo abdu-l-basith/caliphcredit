@@ -5,6 +5,7 @@ import './FacultyDashboardLayout.css';
 import Footer from '../../components/common/Footer';
 import FacultyDashboard from '../../components/common/AddCreditMenus';
 import Profile from '../../components/faculty/FacultyProfile';
+import FacultyHistory from '../../components/faculty/FacultyHistory';
 
 
 function FacultyDashboardLayout() {
@@ -18,28 +19,28 @@ function FacultyDashboardLayout() {
       case 'dashboard':
         return <FacultyDashboard />;
       case 'profile':
-        return <Profile />;
+        return <Profile setCurrentPage={setCurrentPage} />;
       case 'history':
-        return <div><h1>history</h1></div>;
-      case 'settings':
-        return <div><h1>settings</h1></div>;
+        return <FacultyHistory />;
       default:
         return <FacultyDashboard />;
     }
   };
 
   return (
-    <div className="dashboard-layout">
+    <div className="faculty-dashboard-layout">
       <TopBar toggleSidebar={toggleSidebar} />
+      <div className="faculty-dashboard-main-wrapper">
       <Sidebar
         isOpen={sidebarOpen}
         closeSidebar={() => setSidebarOpen(false)}
         setCurrentPage={setCurrentPage} // 👈 Pass this down
       />
       {sidebarOpen && <div className="overlay" onClick={() => setSidebarOpen(false)}></div>}
-      <main className="dashboard-content">
+      <main className="faculty-dashboard-content">
         {renderContent()}
       </main>
+      </div>
       <Footer />
     </div>
   );

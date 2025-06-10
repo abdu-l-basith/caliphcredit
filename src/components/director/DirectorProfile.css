@@ -1,0 +1,148 @@
+.profile-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.profile-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.director-profile-edit-button{
+  background-color: #002e3b;
+}
+.profile-info {
+  flex-grow: 1;
+  margin-left: 20px;
+}
+
+.profile-info h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.profile-info p {
+  margin: 5px 0;
+  color: gray;
+}
+
+.edit-button {
+  padding: 8px 16px;
+  background-color: #4e86f7;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.form-grid {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 40px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 500;
+  margin-bottom: -6px;
+}
+
+
+
+.email-section h4 {
+  font-size: 16px;
+  margin-bottom: 12px;
+  
+}
+.email-section {
+    display: flex;
+    justify-content: space-around;
+    
+}
+
+.email-box {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 15px;
+}
+
+.email-icon {
+  font-size: 24px;
+  background-color: #e3e8fd;
+  padding: 8px;
+  border-radius: 50%;
+}
+
+.email-box p {
+  margin: 0;
+  font-weight: 500;
+}
+
+.email-box span {
+  color: gray;
+  font-size: 13px;
+}
+
+.director-profile-page-button {
+  padding: 10px 18px;
+  background-color: #002e3b;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.director-profile-page-button:hover{
+  background-color: #01485c;
+}
+.password-form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.password-form input{
+  width: 100%;
+  margin-bottom: 15px;
+  height: 30px;
+  border-radius: 5px;
+}
+.form-group input{
+  height: 40px;
+  width: 300px;
+  border-radius: 8px;
+  border: 1px solid rgb(120, 201, 255);
+}
+.password-form .form-group {
+  margin-bottom: 10px;
+}
+.error-msg {
+  color: red;
+}
+.success-msg {
+  color: green;
+}
+.update-btn {
+  background-color: #002e3b;
+  height: 50px;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  margin-right: 20px;
+}

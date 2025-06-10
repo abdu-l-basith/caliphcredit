@@ -9,6 +9,9 @@ import FacultyDashboard from "./components/common/AddCreditMenus";
 import DashboardLayout from "./pages/faculty/FacultyDashboardLayout";
 import FacultyLogin from "./components/common/Login";
 import DirectorDashboardLayout from "./pages/director/DirectorDashboardLayout";
+import SuperAdminLogin from "./components/superadmin/SuperAdminLogin";
+import SuperAdminHome from "./components/superadmin/SuperAdminHome";
+import SignInFinishing from "./components/superadmin/SignInFinishing";
 
 
 const AuthContext = createContext();
@@ -25,7 +28,6 @@ export function AuthProvider({ children }) {
     }
     setLoading(false); // ✅ Wait for loading to finish
   }, []);
-
   const login = (userData) => {
     setUser(userData);
     localStorage.setItem("user", JSON.stringify(userData));
@@ -52,6 +54,20 @@ export function useAuth() {
   return useContext(AuthContext);
 }
 
+
+
+// const ProtectedRoute2 = ({ children }) => {
+//   const user = sessionStorage.getItem("user");
+
+//   if (!user) {
+//     return <Navigate to="/basith-login" />;
+//   }
+
+//   return children;
+// };
+
+
+
 function ProtectedRoute({ allowedRoles, children }) {
   const { user } = useAuth();
 
@@ -68,8 +84,9 @@ function ProtectedRoute({ allowedRoles, children }) {
 
 export default function App() {
   return (
-    <AuthProvider>
+    
       <Router>
+      <AuthProvider>
         <Routes>
           <Route
             path="/"
@@ -88,6 +105,26 @@ export default function App() {
             }
           />
           <Route
+            path="/basith-login"
+            element={
+                <SuperAdminLogin />
+            }
+          />
+          <Route 
+          path="/superadmin" 
+          element={
+            // <ProtectedRoute2>
+              <SuperAdminHome />
+            // </ProtectedRoute2>
+          } 
+        />
+          <Route
+            path="/signing"
+            element={
+                <SignInFinishing ></SignInFinishing>
+            }
+          />
+          <Route
             path="/login"
             element={
               <FacultyLogin />
@@ -96,7 +133,8 @@ export default function App() {
           />
           <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
+        </AuthProvider>
       </Router>
-    </AuthProvider>
+    
   );
 }

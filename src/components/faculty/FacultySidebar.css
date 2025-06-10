@@ -28,4 +28,23 @@
   .sidebar li:hover {
     background-color: #374151;
   }
-  
+  .faculty-siderbar-logout-button{
+    background-color: #002e3b;
+    border: 0.2px solid white;
+    border-radius: 10px;
+    color: #80a9b5;
+    font-size: 18px;
+    font-weight: 400;
+    height: 40px;
+    width: 80px;
+  }
+  .faculty-siderbar-logout-button:hover{
+    border: 0.03px solid rgb(240, 101, 101);
+    background-color: #024c61;
+  }
+  .faculty-topbar-logout-container{
+    display: flex;
+    justify-content: center;
+    padding: 15px 20px;
+    align-items: center;
+  }

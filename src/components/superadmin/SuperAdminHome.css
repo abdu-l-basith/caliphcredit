@@ -1,0 +1,97 @@
+/* html,body {
+  margin: 0;
+  padding: 0;
+
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed; 
+  
+} */
+
+.super-admin-home-page-container{
+align-items: center;
+padding: 50px;
+font-family: monospace;
+background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed; 
+  height: 100vh;
+}
+.super-admin-home-tab-container {
+  width: 80%;
+  margin: 50px auto;
+  border: 2px solid #0f0;
+  border-radius: 20px;
+  box-shadow: 0 0 15px #0f0;
+  padding: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.super-admin-home-tab-header {
+  display: flex;
+}
+
+.super-admin-home-tab {
+  flex: 1;
+  padding: 15px;
+  text-align: center;
+  cursor: pointer;
+  background-color: #004d00;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  font-weight: bold;
+  color: white;
+  transition: 0.3s;
+  font-size: 1.2em;
+}
+
+.super-admin-home-tab:not(:last-child) {
+  border-right: 2px solid #003300;
+}
+
+.super-admin-home-tab:hover {
+  background-color: #0b6d2c;
+}
+
+.super-admin-home-tab-active {
+  background-color: #000;
+  box-shadow: 0 0 10px #0f0;
+  border-bottom: none;
+}
+
+.super-admin-home-tab-body {
+  min-height: 300px;
+  padding: 30px;
+  position: relative;
+}
+
+.super-admin-home-tab-footer {
+  position: absolute;
+  
+  left: 200px;
+  right:200px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.super-admin-home-footer-link {
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 18px;
+}
+.super-admin-home-footer-link:hover{
+    color: #0f0;
+}
+.super-admin-home-page-title{
+   margin-left: 165px;
+   color: #0f0; 
+   font-size: 20px;
+   
+}
+.super-admin-home-page-title:hover{
+    color: white;
+}

@@ -1,30 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import './AddCredit.css';
 import { db } from '../../firebase/config';
-import { collection, getDocs, addDoc, serverTimestamp, updateDoc, arrayUnion, increment, doc } from 'firebase/firestore';
+import { collection, getDocs, getDoc, addDoc, serverTimestamp, updateDoc, arrayUnion, increment, doc } from 'firebase/firestore';
 import SliderWithLabels from './CreditSlider';
 import CreditSelect from './MultiCreditSelecter';
 import SingleCredit from './SingleCredit';
+import { useAuth } from '../../App';
+// user.id = faculty's firestore doc ID
 
 
 
-const AddCredit = ({ isOpen, onClose, title, credit, description }) => {
+const AddCredit = ({ isOpen, onClose, title, credit, description, creditId}) => {
+  
   const [students, setStudents] = useState([]);
 const [selectedStudent, setSelectedStudent] = useState('');
+const { user } = useAuth();
 
 const handleApprove = async () => {
   if (!selectedStudent || selectedCredit === null) {
     alert('Please select a student and a credit value.');
     return;
   }
-
   const newCredit = {
     student: selectedStudent,
-    credit: selectedCredit,
-    title: title,
+    credit: Number(selectedCredit) ,
+    title: creditId,
     remark: remark,
     date: serverTimestamp(),
-    approvedBy: 'Basith'
+    approvedBy: user?.id || 'Unknown'
   };
 
   try {
@@ -70,38 +73,81 @@ const renderCreditType = (credit) => {
     setRemark(e.target.value);
   }
   
-  useEffect(() => {
-    const fetchStudents = async () => {
-      try {
+ useEffect(() => {
+  const fetchStudents = async () => {
+    if (!user?.id) {
+      console.error("No faculty user ID found");
+      return;
+    }
+
+    try {
+      // Step 1: Get current faculty doc
+      const facultyRef = doc(db, 'faculties', user.id);
+      const facultySnap = await getDoc(facultyRef);
+
+      if (!facultySnap.exists()) {
+        console.error("Faculty document not found");
+        return;
+      }
+
+      const facultyData = facultySnap.data();
+      const authLevel = facultyData.Auth; // 0 or 1
+
+      if (authLevel === 1) {
+        // If Auth = 1, fetch all students
         const querySnapshot = await getDocs(collection(db, 'students'));
-        const studentList = querySnapshot.docs.map(doc => ({
+        const allStudents = querySnapshot.docs.map(doc => ({
           id: doc.id,
           name: doc.data().name
         }));
-        setStudents(studentList);
-      } catch (error) {
-        console.error('Error fetching students:', error);
-      }
-    };
+        setStudents(allStudents);
+      } else {
+        // If Auth = 0, fetch only allowedStudents
+        const allowedStudentIds = facultyData.Mentees || [];
 
-    fetchStudents();
-  }, []);
+        if (allowedStudentIds.length === 0) {
+          setStudents([]); // No allowed students
+          return;
+        }
+
+        const studentPromises = allowedStudentIds.map(studentId =>
+          getDoc(doc(db, 'students', studentId))
+        );
+
+        const studentDocs = await Promise.all(studentPromises);
+
+        const allowedStudents = studentDocs
+          .filter(docSnap => docSnap.exists())
+          .map(docSnap => ({
+            id: docSnap.id,
+            name: docSnap.data().name
+          }));
+
+        setStudents(allowedStudents);
+      }
+    } catch (error) {
+      console.error('Error fetching students:', error);
+    }
+  };
+
+  fetchStudents();
+}, [user]);
+
 
   // ✅ Only return null after all hooks are declared
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <button className="close-btn" onClick={onClose}>×</button>
-
-        <h2 className="form-title">{title?.toUpperCase()}</h2>
-        <div className="info-bar">
-          <span className="info-icon">ℹ️</span>
+    <div className="add-credit-modal-overlay">
+      <div className="add-credit-modal-content">
+        <button className="add-credit-close-button" onClick={onClose}>×</button>
+        <h2 className="add-credit-form-title">{title?.toUpperCase()}</h2>
+        <div className="add-credit-info-bar">
+          <span className="add-credit-info-icon"><i class="fa-solid fa-circle-info"></i></span>
           <p>{description}</p>
         </div>
         {renderCreditType(credit)}.
-        <select className="student-select" value={selectedStudent} onChange={handleStudentChange}>
+        <select className="add-credit-student-select" value={selectedStudent} onChange={handleStudentChange}>
   <option value="">Select Student</option>
   {students.map((student) => (
     <option key={student.id} value={student.id}>
@@ -112,7 +158,7 @@ const renderCreditType = (credit) => {
 
 
         <textarea
-        className="remarks-box"
+        className="add-credit-remarks-box"
         placeholder="Remarks....." 
         value={remark}
         onChange={handleRemark} 
@@ -120,32 +166,15 @@ const renderCreditType = (credit) => {
 
         {selectedStudent && (
   <>
-    {/* <p className="credits-message">
-  {typeof credit === "number" ? (
-    `${selectedStudent} got ${credit} credits for academic performance`
-  ) : Array.isArray(credit) ? (
-    <>
-      {selectedStudent} got the following credits:
-      <ul>
-        {credit.map((item, index) => (
-          <li key={index}>
-            {item.Title}: {item.Credit}
-          </li>
-        ))}
-      </ul>
-    </>
-  ) : (
-    'No credit data available.'
-  )}
-</p> */}
-{/* <p className='credit-message'>{selectedStudent} got {selectedCredit} credits for {title}</p> */}
+  
 
 
-    <button className="approve-button" onClick={handleApprove}>APPROVE</button>
+
+    <button className="add-credit-approve-button" onClick={handleApprove}>APPROVE</button>
   </>
 )}
 
-        {/* <button className="approve-button">APPROVE</button> */}
+      
       </div>
     </div>
   );

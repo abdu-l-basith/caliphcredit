@@ -29,23 +29,23 @@
     margin-right: 60px;
   }
   
-  .dashboard-text {
+  .topbar-dashboard-text {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     color: #80a9b5;
   }
   
-  .dashboard-text span {
+  .topbar-dashboard-text span {
     font-weight: bold;
   }
   
-  .dashboard-text p {
+  .topbar-dashboard-text p {
     margin: 0;
     font-size: 12px;
   }
   
-  .menu-icon {
+  .topbar-menu-icon {
     font-size: 24px;
     cursor: pointer;
   }

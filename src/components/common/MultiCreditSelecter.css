@@ -1,4 +1,4 @@
-.selecter-wrapper {
+.credit-selecter-wrapper {
   display: flex;
   flex-wrap: wrap;
   gap: 12px; /* space between buttons */
@@ -6,23 +6,23 @@
   margin: 10px 0;
 }
 
-button {
+.credit-selecter-button {
   padding: 8px 16px;
   background-color: transparent;
-  color: #007bff;
-  border: 2px solid #007bff;
+  color: #002e3b;
+  border: 2px solid #002e3b;
   border-radius: 6px;
   cursor: pointer;
   font-size: 14px;
   transition: all 0.2s ease;
 }
 
-button:hover {
-  background-color: #007bff;
+.credit-selecter-button:hover {
+  background-color: #002e3b;
   color: white;
 }
-.selecter-button.active {
-  background-color: #007bff;
+.credit-selecter-button.active {
+  background-color: #002e3b;
   color: white;
   font-weight: bold;
 }

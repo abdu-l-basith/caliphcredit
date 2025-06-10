@@ -1,22 +1,25 @@
 import firebase from 'firebase/compat/app';
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
+import { getAuth, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink } from 'firebase/auth';
+import { getStorage } from "firebase/storage";
 
 
 
 
 // Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyC3m7X1P6iaTXbF-ZG9arh51mmKqibx9PM",
-  authDomain: "testproject-6fa43.firebaseapp.com",
-  projectId: "testproject-6fa43",
-  storageBucket: "testproject-6fa43.firebasestorage.app",
-  messagingSenderId: "920768333233",
-  appId: "1:920768333233:web:ca8e5f2e6f8130b015a990",
-  measurementId: "G-S04GBYYL2J"
+  apiKey: "AIzaSyDuDsvNoehA7hLHWJdouerYjykHygYzMlc",
+  authDomain: "students-portfolio-8a88a.firebaseapp.com",
+  projectId: "students-portfolio-8a88a",
+  storageBucket: "students-portfolio-8a88a.firebasestorage.app",
+  messagingSenderId: "1097526134045",
+  appId: "1:1097526134045:web:3dee357977998b81d70df4",
+  measurementId: "G-E4W0GF1KCG"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app)
-
+export const storage = getStorage(app);
+export const auth = getAuth(app)
 export {db};

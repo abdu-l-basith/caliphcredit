@@ -1,48 +1,80 @@
-.dashboard-container {
+.faculty-profile-dashboard-container {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
   padding: 30px;
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #f3f3f3, #fdfdfd);
   justify-content: center;
 }
-
-.card {
+.faculty-profile-my-histroy-full-wrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  justify-items: center;
+}
+.faculty-profile-card {
   background-color: white;
   border-radius: 15px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   padding: 20px;
   width: 300px;
   min-height: 200px;
+  display: flex;
+  flex-direction: column;
 }
+.faculty-profile-details-ptags{
+  padding: 20px;
+  
+}
+.faculty-profile-car-profile-pic{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  justify-items: center;
+  flex-direction: column;
 
-.profile-img {
-  width: 100%;
-  border-radius: 10px;
+}
+.faculty-profile-profile-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
   margin-bottom: 15px;
   object-fit: cover;
 }
 
-h3 {
+faculty-profile-head-line {
   margin: 10px 0;
   font-size: 20px;
-  color: #333;
+  color: #002e3b;
 }
 
-ul {
+.faculty-profile-ul {
   list-style: none;
-  padding: 0;
+  padding: 10px;
 }
 
-li {
-  margin: 10px 0;
+.faculty-profile-li {
+  margin: 1px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-
-.tag {
+.faculty-profile-forgot-password{
+  cursor: pointer;
+  color: #002e3b;
+}
+.faculty-profile-forgot-password:hover{
+color: #0a596e;
+cursor: pointer;
+font-weight: 600;
+}
+.faculty-profile-name-details{
+ margin-bottom: 10px;
+}
+.faculty-profile-tag {
   padding: 4px 10px;
   border-radius: 20px;
   font-size: 12px;
@@ -51,36 +83,69 @@ li {
 
 .tag.active {
   background-color: #28a745;
+  border-radius: 50%;
 }
 
 .tag.inactive {
   background-color: #6c757d;
+  border-radius: 50%;
 }
 
 .tag.success {
   background-color: #28a745;
+  border-radius: 50%;
 }
 
 .tag.warning {
   background-color: #ffc107;
   color: #333;
+  border-radius: 50%;
 }
 
 .tag.error {
   background-color: #dc3545;
+  border-radius: 50%;
 }
 
-.btn {
+.faculty-profile-edit-info-button {
   border: none;
   padding: 10px 15px;
-  border-radius: 8px;
+  border-radius: 5px;
   margin-top: 10px;
   cursor: pointer;
+  margin-top: 10px;
   font-weight: bold;
   font-size: 14px;
+  background-color: #002e3b;
+  color: white;
+}
+.faculty-profile-edit-info-button:hover{
+  background-color: #024e63;
+  color: white;
+
 }
 
-.btn.danger {
-  background-color: #ff4d4d;
-  color: white;
+.faculty-profile-history-head-line{
+  margin: 0;
+  font-size: 15px;
+}
+.faculty-profile-history-description{
+  margin: 0;
+  font-size: 12px;
+}
+.faculty-profile-my-history-each-wrapper{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-bottom: 30px;
+}
+.faculty-profile-my-history-wrapper{
+  margin-top: 20px;
+}
+.faculty-profile-mentees-li{
+  display: flex;
+  justify-content: space-between;
+}
+.faculty-profile-mentees-ul{
+  list-style: none;
 }

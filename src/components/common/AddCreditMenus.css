@@ -1,36 +1,44 @@
-.container {
-  padding: 30px;
-  margin-top: 60px;
+.credit-menu-container {
+  padding-top: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 30px;
   margin-left: 50px;
   transition: margin-right 0.3s ease;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 20px;
+  
 }
-  item {
-    background: #ccc;
-    padding: 20px;
-    text-align: center;
+  .credit-menu-card-wrapper{
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
   }
-  .card-container {
-    background-color: #ffffff;
+  .credit-menu-card-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    justify-items: center;
+    background-color: #f5f5f5;
     border-radius: 16px;
-    color: #002e3b;
+    color: white;
     padding: 24px;
     width: 150px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    height: 200px;
+    box-shadow: 0 4px 5px #cae8f1;
     text-align: center;
     transition: transform 0.2s ease;
     cursor: pointer;
     font-size: 50px;
   }
   
-  .card-container:hover {
+  .credit-menu-card-container:hover {
     transform: translateY(-5px);
   }
   
-  .icon-circle {
-    background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+  .credit-menu-icon-circle {
+    background: #002e3b;
     border-radius: 50%;
     width: 104px;
     height: 104px;
@@ -40,16 +48,36 @@
     justify-content: center;
   }
   
-  .card-icon {
+  .credit-menu-card-icon {
     color: white;
     font-size: 28px;
   }
   
-  .card-title {
+  .credit-menu-card-title {
     font-size: 16px;
     font-weight: 600;
-    color: #333;
+    color: #002e3b;
   }
-  .container.sidebar-open {
+  .credit-menu-container.sidebar-open {
     margin-right: 220px; /* match sidebar width */
   }
+  .credit-menu-search-bar {
+  margin: 16px;
+  text-align: center;
+}
+
+.credit-menu-search-bar input {
+  padding: 10px 14px;
+  width: 80%;
+  max-width: 400px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 46, 59, 0.2);
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.credit-menu-search-bar input:focus {
+  border-color: #002e3b;
+}
